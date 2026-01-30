@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samsara OS - Beta 2.2 Target Highlight</title>
+    <title>Samsara OS - v1.0 Official</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -24,12 +24,12 @@
             border-radius: 20px;
         }
 
-        /* Wheel Styles */
+        /* Wheel Container */
         .cycle-outer {
             position: relative;
             width: 100%;
             aspect-ratio: 1 / 1;
-            max-width: 420px; /* Slightly smaller for mobile safety */
+            max-width: 400px; /* Mobile optimal */
             margin: 0 auto;
             display: flex;
             justify-content: center;
@@ -44,14 +44,12 @@
             transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
 
+        /* The Nodes */
         .cycle-node {
             position: absolute;
-            width: 65px;
-            height: 65px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            width: 68px; height: 68px;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
             background: rgba(15, 23, 42, 0.95);
             border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 50%;
@@ -61,36 +59,33 @@
         }
 
         @media (min-width: 768px) {
-            .cycle-node { width: 85px; height: 85px; }
+            .cycle-node { width: 90px; height: 90px; }
             .cycle-outer { max-width: 500px; }
         }
 
         .cycle-node.active {
             background: rgba(30, 41, 59, 1);
-            transform: scale(1.15) !important;
+            transform: scale(1.2) !important;
             box-shadow: 0 0 25px rgba(255, 255, 255, 0.1);
             border-width: 2px;
             z-index: 20;
         }
 
-        /* Target Highlight Class */
+        /* Target Highlight */
         .cycle-node.target-highlight {
             border-width: 2px;
             box-shadow: 0 0 20px currentColor;
             z-index: 15;
+            transform: scale(1.1);
         }
 
         .connection-lines {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.1;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0; opacity: 0.15;
         }
 
         .center-hub {
-            position: absolute;
-            width: 70px; height: 70px;
+            position: absolute; width: 80px; height: 80px;
             border-radius: 50%;
             background: rgba(30, 41, 59, 0.6);
             border: 1px dashed rgba(255, 255, 255, 0.1);
@@ -99,34 +94,11 @@
             z-index: 5;
         }
 
-        /* Mode Colors */
-        .bg-LOOP { background-color: #eab308; }
-        .text-LOOP { color: #eab308; }
-        .border-LOOP { border-color: #eab308; }
-
-        .bg-INTERNAL { background-color: #f97316; }
-        .text-INTERNAL { color: #f97316; }
-        .border-INTERNAL { border-color: #f97316; }
-
-        .bg-GATEWAY { background-color: #06b6d4; }
-        .text-GATEWAY { color: #06b6d4; }
-        .border-GATEWAY { border-color: #06b6d4; }
-
-        .bg-VEDANA { background-color: #8b5cf6; }
-        .text-VEDANA { color: #8b5cf6; }
-        .border-VEDANA { border-color: #8b5cf6; }
-
-        .bg-TANHA { background-color: #ef4444; }
-        .text-TANHA { color: #ef4444; }
-        .border-TANHA { border-color: #ef4444; }
-
-        .bg-VOID { background-color: #ffffff; }
-        .text-VOID { color: #ffffff; }
-
+        /* Nav Buttons */
         .nav-btn {
             padding: 8px 14px;
             border-radius: 99px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             transition: 0.3s;
             opacity: 0.6;
@@ -134,42 +106,44 @@
         }
         .nav-btn.active { opacity: 1; background: rgba(255,255,255,0.1); box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
 
+        /* Helpers */
         .progress-bar { height: 3px; background: currentColor; width: 0%; transition: width 0.1s linear; }
         .mode-info-container { transition: all 0.5s; overflow: hidden; max-height: 200px; opacity: 1; margin-bottom: 1rem; }
         .mode-info-container.collapsed { max-height: 0; opacity: 0; margin-bottom: 0; padding: 0; border: 0; }
-
+        
         .scenario-select { 
-            background: rgba(15, 23, 42, 0.7); 
-            border: 1px solid rgba(255,255,255,0.1); 
+            background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255,255,255,0.1); 
             color: #94a3b8; font-size: 13px; padding: 6px 10px; border-radius: 12px; outline: none; 
         }
 
-        ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 10px; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
     </style>
 </head>
-<body class="p-3 md:p-6">
+<body class="p-3 md:p-6 flex flex-col h-screen overflow-hidden">
 
     <!-- Header -->
-    <header class="flex flex-col gap-4 mb-6">
-        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+    <header class="flex flex-col gap-4 mb-2 shrink-0">
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-3">
             <div class="flex items-center gap-3">
                 <div id="mode-dot" class="w-3 h-3 rounded-full bg-yellow-500 shadow-[0_0_12px_currentColor] transition-colors duration-500"></div>
-                <h1 class="text-xl font-bold text-white uppercase leading-none">
-                    Samsara OS <span class="text-slate-400 font-normal">สังสารวัฏ</span>
-                    <span class="text-[10px] text-slate-500 border border-slate-700 px-2 py-0.5 rounded ml-1">Beta 2.2</span>
+                <h1 class="text-2xl font-bold text-white uppercase leading-none flex items-center gap-2">
+                    Samsara OS <span class="text-slate-400 font-normal text-lg">สังสารวัฏ</span>
+                    <span class="text-[10px] text-slate-500 border border-slate-700 px-2 py-0.5 rounded ml-1">v1.0</span>
                 </h1>
             </div>
             
             <select id="scenario-select" onchange="changeScenario(this.value)" class="scenario-select w-full sm:w-auto">
                 <option value="NONE">-- เลือกสถานการณ์ (Scenario) --</option>
-                <option value="FOOD">🍗 เรื่องกิน</option>
-                <option value="SOCIAL">📱 โซเชียล</option>
-                <option value="SHOPPING">🛍️ ช้อปปิ้ง</option>
+                <option value="FOOD">🍗 เรื่องกิน (Hunger)</option>
+                <option value="SOCIAL">📱 โซเชียล (Social Drama)</option>
+                <option value="SHOPPING">🛍️ ช้อปปิ้ง (Shopping)</option>
             </select>
         </div>
         
-        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+        <div class="flex gap-2 overflow-x-auto pb-2 scrollbar-hide w-full">
             <button onclick="setMode('LOOP')" id="btn-LOOP" class="nav-btn text-yellow-400">วัฏฏะ</button>
             <button onclick="setMode('INTERNAL')" id="btn-INTERNAL" class="nav-btn text-orange-400">หยุดปรุงแต่ง</button>
             <button onclick="setMode('GATEWAY')" id="btn-GATEWAY" class="nav-btn text-cyan-400">สักแต่ว่ารู้</button>
@@ -179,14 +153,15 @@
         </div>
     </header>
 
-    <main class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+    <!-- Main Layout -->
+    <main class="flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start min-h-0 overflow-hidden">
         
-        <!-- Wheel Section -->
-        <section class="lg:col-span-7 flex flex-col items-center">
+        <!-- Left: Wheel Section -->
+        <section class="lg:col-span-7 flex flex-col items-center justify-center h-full relative">
             <div class="cycle-outer" id="cycle-outer">
                 <svg class="connection-lines" id="svg-lines"></svg>
                 <div class="cycle-container" id="cycle-container">
-                    <!-- Nodes Injected -->
+                    <!-- Nodes -->
                 </div>
                 <div class="center-hub">
                     <div id="hub-icon" class="text-slate-500 transition-colors duration-500">
@@ -194,66 +169,80 @@
                     </div>
                 </div>
             </div>
-            <p class="text-[10px] text-slate-500 mt-4 font-mono uppercase tracking-widest opacity-40">Drag or Swipe Wheel to Rotate</p>
+            <p class="text-[10px] text-slate-500 mt-4 font-mono uppercase tracking-widest opacity-40 absolute bottom-4">Swipe to Rotate</p>
         </section>
 
-        <!-- Detail Section -->
-        <section class="lg:col-span-5 flex flex-col gap-4">
+        <!-- Right: Detail Section -->
+        <section class="lg:col-span-5 flex flex-col gap-4 h-full min-h-0 relative">
             
+            <!-- Toggle Info Btn -->
+            <div class="flex justify-end h-0 relative">
+                <button onclick="toggleModeInfo()" id="info-toggle-btn" class="absolute -top-2 right-2 z-30 p-2 rounded-full bg-slate-800 border border-slate-700 shadow-xl opacity-60 hover:opacity-100 transition-all">
+                    <i data-lucide="info" class="w-5 h-5 text-slate-300"></i>
+                </button>
+            </div>
+
+            <!-- Objective Box (Collapsible) -->
             <div id="mode-info-box" class="mode-info-container zen-panel border-l-4 p-4 shrink-0">
-                <div class="flex justify-between items-start mb-2">
+                <div class="flex justify-between items-start mb-2 pr-8">
                     <span class="text-xs font-mono uppercase text-slate-400 tracking-wider">Objective</span>
                     <span id="toast-timer" class="text-[10px] text-slate-500">Auto-hide</span>
                 </div>
                 <h3 id="mode-title" class="text-lg font-bold text-white mb-1">...</h3>
-                <p id="mode-desc" class="text-xs text-slate-300 leading-relaxed font-light">...</p>
+                <p id="mode-desc" class="text-sm text-slate-300 leading-relaxed font-light">...</p>
             </div>
 
-            <div class="zen-panel p-6 md:p-8 flex flex-col relative overflow-hidden group min-h-[450px]">
+            <!-- Main Detail Panel -->
+            <div class="zen-panel p-6 md:p-8 flex flex-col relative overflow-hidden group flex-1 min-h-0">
                 <div id="bg-icon-decor" class="absolute -right-6 -bottom-6 opacity-[0.05] transform group-hover:scale-110 transition-all duration-700"></div>
                 
                 <div class="z-10 flex flex-col h-full">
+                    
+                    <!-- Title -->
                     <div class="mb-5 shrink-0">
                          <div class="flex justify-between items-start">
                              <div class="text-[10px] font-mono text-blue-400 mb-1 uppercase tracking-wider" id="active-tech-label">...</div>
                              <div id="pid-display" class="text-sm font-mono text-slate-600 font-bold">...</div>
                          </div>
-                         <h2 id="active-pali" class="text-4xl md:text-5xl font-bold text-white leading-tight mt-1">...</h2>
+                         <h2 id="active-pali" class="text-4xl md:text-5xl font-bold text-white leading-tight mt-1 transition-all duration-300">...</h2>
                     </div>
 
                     <div class="h-px w-full bg-white/10 mb-5 shrink-0"></div>
 
-                    <div class="flex-1 space-y-6 overflow-y-auto pr-2 max-h-[45vh] md:max-h-none custom-scroll">
+                    <!-- Scrollable Content -->
+                    <div class="flex-1 space-y-6 overflow-y-auto pr-2 custom-scroll">
+                        
                         <!-- Scenario -->
                         <div id="scenario-box" class="hidden bg-green-500/5 rounded-xl p-5 border border-green-500/10 transition-all">
-                            <div class="text-[10px] font-bold text-green-400 uppercase mb-2 flex items-center gap-2 tracking-widest">
+                            <div class="text-xs font-bold text-green-400 uppercase mb-2 flex items-center gap-2 tracking-widest">
                                 <i data-lucide="play-circle" class="w-4 h-4"></i>
-                                <span>ตัวอย่างสถานการณ์</span>
+                                <span id="label-scenario">ตัวอย่างสถานการณ์</span>
                             </div>
-                            <p id="active-scenario" class="text-sm md:text-base text-green-100/90 leading-relaxed">...</p>
+                            <p id="active-scenario" class="text-base text-green-100/90 leading-relaxed">...</p>
                         </div>
 
                         <!-- Dhamma -->
                         <div class="bg-black/20 rounded-xl p-5 border border-white/5">
-                            <div class="text-[10px] font-bold text-slate-400 uppercase mb-3 flex items-center gap-2 tracking-widest">
-                                <i data-lucide="book-open" class="w-4 h-4 text-yellow-500"></i>
-                                <span>ความหมายทางธรรม</span>
+                            <div class="text-xs font-bold text-slate-400 uppercase mb-3 flex items-center gap-2 tracking-widest">
+                                <i data-lucide="book-open" class="w-5 h-5 text-yellow-500"></i>
+                                <span id="label-dhamma">ความหมายทางธรรม</span>
                             </div>
-                            <p id="active-dhamma" class="text-sm md:text-base text-slate-200 font-light leading-relaxed">...</p>
+                            <p id="active-dhamma" class="text-lg text-slate-200 font-light leading-relaxed">...</p>
                         </div>
 
-                        <!-- Tech -->
+                        <!-- Tech / Credits -->
                         <div class="bg-blue-500/5 rounded-xl p-5 border border-blue-500/10">
-                            <div class="text-[10px] font-bold text-blue-300 uppercase mb-3 flex items-center gap-2 tracking-widest">
-                                <i data-lucide="monitor" class="w-4 h-4"></i>
-                                <span>เปรียบเทียบทางเทคนิค</span>
+                            <div class="text-xs font-bold text-blue-300 uppercase mb-3 flex items-center gap-2 tracking-widest">
+                                <i data-lucide="monitor" class="w-5 h-5" id="icon-analogy"></i>
+                                <span id="label-analogy">เปรียบเทียบทางเทคนิค</span>
                             </div>
-                            <div id="active-analogy" class="text-xs md:text-sm text-blue-100/80 font-light leading-relaxed whitespace-pre-line">...</div>
+                            <div id="active-analogy" class="text-base text-blue-100/80 font-light leading-relaxed whitespace-pre-line">...</div>
                         </div>
                     </div>
 
-                    <div class="mt-6 pt-3 border-t border-white/5 shrink-0 relative">
-                        <div class="absolute bottom-0 left-0 w-full h-1 bg-white/5 rounded-full overflow-hidden">
+                    <!-- Progress Bar -->
+                    <div class="mt-4 pt-3 border-t border-white/5 shrink-0 relative">
+                        <div class="absolute bottom-0 left-0 w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
                             <div id="main-progress" class="progress-bar bg-white"></div>
                         </div>
                     </div>
@@ -315,7 +304,7 @@
             
             container.innerHTML = '';
             const size = outer.clientWidth;
-            const radius = size / 3.0; // Adjusted for better spacing on small screens
+            const radius = size / 3.0; 
             const centerX = size / 2;
             const centerY = size / 2;
 
@@ -329,13 +318,13 @@
                 const node = document.createElement('div');
                 node.className = `cycle-node group`;
                 node.id = `node-${i}`;
-                node.style.left = `${x - 32.5}px`; 
-                node.style.top = `${y - 32.5}px`;
+                node.style.left = `${x - 34}px`; 
+                node.style.top = `${y - 34}px`;
                 node.onclick = () => jumpTo(i);
                 node.innerHTML = `
-                    <div class="text-[8px] font-mono text-slate-500 pointer-events-none">0${n.id}</div>
+                    <div class="text-[9px] font-mono text-slate-500 pointer-events-none">0${n.id}</div>
                     <i data-lucide="${n.icon}" class="w-5 h-5 text-slate-500 icon-el pointer-events-none"></i>
-                    <div class="text-[8px] font-bold text-slate-500 mt-0.5 text-center leading-none pointer-events-none title-el">${n.pali}</div>
+                    <div class="text-[9px] font-bold text-slate-400 mt-0.5 text-center leading-none pointer-events-none title-el">${n.pali}</div>
                     <div id="cut-${i}" class="absolute -top-1 -right-1 opacity-0 transition-all scale-50 text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full shadow-lg pointer-events-none">CUT</div>
                 `;
                 container.appendChild(node);
@@ -346,7 +335,7 @@
                 lines += `<line x1="${x}" y1="${y}" x2="${nextX}" y2="${nextY}" stroke="rgba(255,255,255,0.05)" stroke-width="1" />`;
             });
             
-            svgLines.innerHTML = lines;
+            // Background lines handled by simple SVG or css if needed, here simplified.
             lucide.createIcons();
         }
 
@@ -391,19 +380,31 @@
             document.getElementById('mode-dot').className = `w-3 h-3 rounded-full shadow-[0_0_12px_currentColor] transition-colors duration-500 ${info.color.replace('text-', 'bg-')}`;
             document.getElementById('hub-icon').className = `transition-colors duration-500 ${info.color}`;
 
+            showModeInfo(true);
+            idx = 0;
+            startTime = Date.now();
+            updateUI();
+        }
+
+        function showModeInfo(withTimer) {
+            const info = modeInfo[currentMode];
             const box = document.getElementById('mode-info-box');
+            
             box.className = `mode-info-container zen-panel border-l-4 p-4 shrink-0 ${info.border}`;
             box.classList.remove('collapsed');
+            
             document.getElementById('mode-title').innerText = info.title;
             document.getElementById('mode-title').className = `text-lg font-bold mb-1 ${info.color}`;
             document.getElementById('mode-desc').innerText = info.desc;
 
             if(fadeTimeout) clearTimeout(fadeTimeout);
-            fadeTimeout = setTimeout(() => box.classList.add('collapsed'), 10000);
+            if(withTimer) fadeTimeout = setTimeout(() => box.classList.add('collapsed'), 10000);
+        }
 
-            idx = 0;
-            startTime = Date.now();
-            updateUI();
+        function toggleModeInfo() {
+            const box = document.getElementById('mode-info-box');
+            if (box.classList.contains('collapsed')) showModeInfo(true);
+            else box.classList.add('collapsed');
         }
 
         function changeScenario(val) {
@@ -423,27 +424,37 @@
             const info = modeInfo[currentMode];
             const scenarioBox = document.getElementById('scenario-box');
             
+            // Rotate Wheel logic
             if (!isDragging) {
                 rotationAngle = -(idx * 30);
                 document.getElementById('cycle-container').style.transform = `rotate(${rotationAngle}deg)`;
             }
 
+            // Right Panel Logic
             if (currentMode === 'VOID') {
                 document.getElementById('active-pali').innerText = "สุญญตา";
                 document.getElementById('active-tech-label').innerText = "SYSTEM VOID";
                 document.getElementById('active-dhamma').innerText = "ความว่างจากตัวตน คืนสู่ธรรมชาติ ไม่มีผู้เสวยสุขและทุกข์";
+                document.getElementById('label-analogy').innerText = "กิตติกรรมประกาศ";
+                document.getElementById('icon-analogy').setAttribute('data-lucide', 'heart-handshake');
                 document.getElementById('active-analogy').innerText = CREDIT_TEXT;
-                scenarioBox.classList.add('hidden');
                 document.getElementById('bg-icon-decor').innerHTML = `<i data-lucide="wind" class="w-48 h-48 text-white"></i>`;
                 document.getElementById('pid-display').innerText = "--";
+                scenarioBox.classList.add('hidden');
             } else {
                 document.getElementById('active-pali').innerText = activeData.pali;
                 document.getElementById('active-pali').className = `text-4xl md:text-5xl font-bold transition-all ${info.color}`;
                 document.getElementById('active-tech-label').innerText = activeData.tech;
+                
+                document.getElementById('label-dhamma').innerText = "ความหมายทางธรรม";
                 document.getElementById('active-dhamma').innerText = activeData.dhamma;
+                
+                document.getElementById('label-analogy').innerText = "เปรียบเทียบทางเทคนิค";
+                document.getElementById('icon-analogy').setAttribute('data-lucide', 'monitor');
                 document.getElementById('active-analogy').innerText = activeData.analogy;
-                document.getElementById('pid-display').innerText = (idx + 1).toString().padStart(2, '0') + "/12";
+                
                 document.getElementById('bg-icon-decor').innerHTML = `<i data-lucide="${activeData.icon}" class="w-48 h-48 text-white"></i>`;
+                document.getElementById('pid-display').innerText = (idx + 1).toString().padStart(2, '0') + "/12";
 
                 if (currentScenario !== 'NONE' && activeData.scenarios[currentScenario]) {
                     scenarioBox.classList.remove('hidden');
@@ -452,46 +463,55 @@
             }
             lucide.createIcons();
 
+            // Wheel Nodes Logic
             nidanas.forEach((n, i) => {
                 const node = document.getElementById(`node-${i}`);
                 if(!node) return;
+                
+                // Keep text upright
+                node.style.transform = `rotate(${-rotationAngle}deg)`;
+
                 const icon = node.querySelector('.icon-el');
                 const title = node.querySelector('.title-el');
                 const cutBadge = document.getElementById(`cut-${i}`);
 
-                node.style.transform = `rotate(${-rotationAngle}deg)`;
                 node.classList.remove('active', 'target-highlight');
-                node.style.color = ''; 
+                node.style.color = '';
+                node.style.boxShadow = '';
                 cutBadge.classList.add('opacity-0');
                 
-                // --- TARGET HIGHLIGHT LOGIC ---
-                // ถ้า ID ของการ์ด ตรงกับ Target ของโหมดที่เลือก (เช่น โหมด Internal -> Target คือ สังขาร ID 2)
+                // Color Logic for Target (Cut Point)
                 const isTarget = (i + 1) === info.targetId;
-                
+                const modeColorHex = getHexColor(currentMode);
+
                 if (isTarget && currentMode !== 'VOID' && currentMode !== 'LOOP') {
                     node.classList.add('target-highlight');
-                    node.style.color = getHexColor(currentMode); 
-                    node.style.borderColor = 'currentColor';
-                    icon.className = `w-5 h-5 transition-colors icon-el`;
-                    icon.style.color = 'inherit';
-                    title.className = `text-[8px] font-bold mt-0.5 text-center leading-none pointer-events-none title-el`;
-                    title.style.color = 'inherit';
+                    node.style.borderColor = modeColorHex;
+                    node.style.boxShadow = `0 0 15px ${modeColorHex}40`; // 40 is hex opacity
+                    
+                    icon.style.color = modeColorHex;
+                    title.style.color = modeColorHex;
                     
                     cutBadge.classList.remove('opacity-0');
-                    cutBadge.style.backgroundColor = getHexColor(currentMode);
+                    cutBadge.style.backgroundColor = modeColorHex;
                 } else {
-                    icon.className = `w-5 h-5 transition-colors icon-el text-slate-500`;
-                    icon.style.color = '';
-                    title.className = `text-[8px] font-bold mt-0.5 text-center leading-none pointer-events-none title-el text-slate-500`;
+                    icon.style.color = ''; // reset to default css
                     title.style.color = '';
                     node.style.borderColor = 'rgba(255,255,255,0.1)';
+                    icon.classList.remove('text-white');
+                    icon.classList.add('text-slate-500');
+                    title.classList.remove('text-white');
+                    title.classList.add('text-slate-500');
                 }
 
+                // Color Logic for Active Node
                 if (i === idx && currentMode !== 'VOID') {
                     node.classList.add('active');
                     if(!isTarget) {
                         node.style.borderColor = 'rgba(255,255,255,0.4)';
-                        icon.classList.add(info.color);
+                        icon.classList.remove('text-slate-500');
+                        icon.classList.add(info.color); // Tailwind class
+                        title.classList.remove('text-slate-500');
                         title.classList.add('text-white');
                     }
                 }
@@ -502,14 +522,10 @@
 
         function getHexColor(mode) {
             const map = {
-                'LOOP': '#eab308',
-                'INTERNAL': '#f97316',
-                'GATEWAY': '#06b6d4',
-                'VEDANA': '#8b5cf6',
-                'TANHA': '#ef4444',
-                'VOID': '#ffffff'
+                'LOOP': '#eab308', 'INTERNAL': '#f97316', 'GATEWAY': '#06b6d4',
+                'VEDANA': '#8b5cf6', 'TANHA': '#ef4444', 'VOID': '#ffffff'
             };
-            return map[mode];
+            return map[mode] || '#ffffff';
         }
 
         function animate() {
